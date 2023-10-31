@@ -5,7 +5,7 @@ from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QLabel, QMainWindow, QTabWidget
 
 
-class GeomHelper(QMainWindow):
+class MyGeomHelper(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('form.ui', self)
@@ -45,7 +45,7 @@ class GeomHelper(QMainWindow):
         if self.sender().text() == "НАЧАТЬ ОБУЧЕНИЕ":
             self.stackedWidget.setCurrentIndex(2)
 
-    def fill_comboBox(self):
+    def fill_combobox(self):
         with open('load_files/shapes.txt', 'r', encoding='utf-8') as f:
             for shape in f.readlines():
                 self.comboBox.addItem(shape)
@@ -53,7 +53,7 @@ class GeomHelper(QMainWindow):
             for theme in f.readlines():
                 self.comboBox_theme.addItem(theme)
 
-    def test_prepearing(self):
+    def test_preparing(self):
         self.user_name = self.get_name.text()
         self.get_name.clear()
         self.test_theme = self.comboBox_theme.currentText()
@@ -61,6 +61,6 @@ class GeomHelper(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = GeomHelper()
+    ex = MyGeomHelper()
     ex.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
