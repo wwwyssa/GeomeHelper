@@ -2,7 +2,8 @@ import sys
 import io
 from PyQt5 import uic
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QLabel, QMainWindow, QTabWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from testing import generate_questions
 
 
 class MyGeomHelper(QMainWindow):
@@ -45,10 +46,9 @@ class MyGeomHelper(QMainWindow):
             self.curr_image1 = QImage(name)
             self.patimg1 = QImage(name)
             self.pixmap1 = QPixmap(f'{name}')
-            self.lable_learn.resize(400, 185)
             self.lable_learn.setPixmap(self.pixmap1)
         if self.sender().text() == "НАЧАТЬ ТЕСТИРОВАНИЕ":
-            self.test_prepearing()
+            self.test_preparing()
             self.stackedWidget.setCurrentIndex(4)
         if self.sender().text() == "НАЧАТЬ ОБУЧЕНИЕ":
             self.stackedWidget.setCurrentIndex(2)
@@ -63,9 +63,10 @@ class MyGeomHelper(QMainWindow):
                 self.comboBox_theme.addItem(theme)
 
     def test_preparing(self):
-        self.user_name = self.get_name.text()
+        self.user_name = self.get_name.text().rstrip()
         self.get_name.clear()
-        self.test_theme = self.comboBox_theme.currentText()
+        self.test_theme = self.comboBox_theme.currentText().rstrip()
+        questions = generate_questions(self.test_theme)
 
     def show_picture(self):
         shape = self.comboBox.currentText().rstrip()
@@ -74,7 +75,6 @@ class MyGeomHelper(QMainWindow):
         self.curr_image1 = QImage(name)
         self.patimg1 = QImage(name)
         self.pixmap1 = QPixmap(f'{name}')
-        self.lable_learn.resize(400, 185)
         self.lable_learn.setPixmap(self.pixmap1)
 
     def learn_preparing(self):
