@@ -65,9 +65,13 @@ def update_db(theme, name, result):
     tmp = con.execute(f"""SELECT name FROM results WHERE name = '{name}'""").fetchall()
     if len(tmp) == 0 or name not in tmp[0]:
         query = f"""INSERT INTO results(theme, name, result) VALUES ('{theme}', '{name}', {result})"""
+        res = cur.execute(query)
     else:
-        query = f"""UPDATE results
-        SET result = {result}
-        WHERE name = '{name}'"""
-    res = cur.execute(query)
+        tmp = con.execute(f"""SELECT result FROM results WHERE name = '{name}'""").fetchall()
+        if tmp[0][0] < result:
+            print(1)
+            query = f"""UPDATE results
+            SET result = {result}
+            WHERE name = '{name}'"""
+            res = cur.execute(query)
     con.commit()
