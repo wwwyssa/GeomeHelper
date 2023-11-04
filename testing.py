@@ -3,7 +3,7 @@ import random
 
 
 def generate_questions(test_theme):
-    name = 'geoma'
+    name = 'geoma_db'
     con = sqlite3.connect(name)
     questions = []
     if test_theme == 'Все':
@@ -19,17 +19,55 @@ def generate_questions(test_theme):
         result = con.execute(f"""SELECT formula.formula_name FROM formula
             WHERE formula.shape_id = (SELECT id FROM shape WHERE name = '{test_theme}')""").fetchall()
         name = test_theme
+        random.shuffle(result)
         questions = [[name, i[0]] for i in result]
     for i in range(len(questions)):
         elem = questions[i]
         task = elem[1]
         result = con.execute(
             f"""SELECT formula.formula FROM formula WHERE formula.formula_name = '{task}'""").fetchall()
-        questions[i].append(result[0])
+        result = result[0][0]
+        result = result.replace(' ', '')
+        questions[i].append(result)
 
     con.close()
-    print(questions)
     return questions
+    # фигура, название формулы, формула
 
 
-generate_questions('Трапеция')
+def check_results(user_answer, questions):
+    kol = 0
+    right_answer = list()
+    user = list()
+    diff = list()
+    for i in range(len(questions)):
+        tmp = questions[i][2]
+        tmp = [i for i in tmp]
+        tmp.sort()
+        right_answer.append(''.join(tmp))
+    for i in range(len(user_answer)):
+        tmp = user_answer[i]
+        tmp = [i for i in tmp]
+        tmp.sort()
+        user.append(''.join(tmp))
+    for i in range(len(user_answer)):
+        if user[i] == right_answer[i]:
+            kol += 1
+        else:
+            diff.append((user_answer[i], questions[i][2]))
+    return (kol, diff)
+
+
+def update_db(theme, name, result):
+    name_db = 'geoma_db'
+    con = sqlite3.connect(name_db)
+    cur = con.cursor()
+    tmp = con.execute(f"""SELECT name FROM results WHERE name = '{name}'""").fetchall()
+    if len(tmp) == 0 or name not in tmp[0]:
+        query = f"""INSERT INTO results(theme, name, result) VALUES ('{theme}', '{name}', {result})"""
+    else:
+        query = f"""UPDATE results
+        SET result = {result}
+        WHERE name = '{name}'"""
+    res = cur.execute(query)
+    con.commit()
