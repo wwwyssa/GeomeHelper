@@ -1,8 +1,9 @@
+import sqlite3
 import sys
 import io
 from PyQt5 import uic
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QApplication, QMainWindow, QInputDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QInputDialog, QTableWidgetItem
 
 import testing
 from testing import generate_questions, check_results, update_db
@@ -18,6 +19,7 @@ class MyGeomHelper(QMainWindow, Ui_MainWindow):
         self.test_theme = None
         self.questions = None
         self.test_result = None
+        self.diff = None
         self.user_answer_list = []
         self.get_result_btn.setEnabled(False)
         self.question_idx = 0
@@ -32,6 +34,8 @@ class MyGeomHelper(QMainWindow, Ui_MainWindow):
         self.testing_btn.clicked.connect(self.get_ans)
         self.get_result_btn.clicked.connect(self.move_to_another)
         self.result_back_btn.clicked.connect(self.move_to_another)
+        self.con = sqlite3.connect("geoma_db")
+        self.titles = None
 
     def launch(self):
         self.set_background()
@@ -83,8 +87,10 @@ class MyGeomHelper(QMainWindow, Ui_MainWindow):
         self.user_name = self.get_name.text().rstrip()
         self.get_name.clear()
         self.test_theme = self.comboBox_theme.currentText().rstrip()
+
         self.label_testing.setText(f"Тема теста: {self.test_theme}")
         self.questions = generate_questions(self.test_theme)
+        print(self.test_theme)
         self.textBrowser_task.setText(self.questions[self.question_idx][1])
         self.question_idx += 1
 
@@ -135,14 +141,33 @@ class MyGeomHelper(QMainWindow, Ui_MainWindow):
             self.testing_btn.setEnabled(False)
             self.get_result_btn.setEnabled(True)
             self.lineEdit.setDisabled(True)
-            self.test_result, diff = check_results(self.user_answer_list, self.questions)
+            self.test_result, self.diff = check_results(self.user_answer_list, self.questions)
             self.fill_result()
             self.question_idx = 0
             update_db(self.test_theme, self.user_name, self.test_result)
             self.user_answer_list = list()
+            self.update_result()
         self.lineEdit.clear()
         self.show_question(self.questions[self.question_idx][1])
         self.question_idx += 1
+
+    def update_result(self):
+        dif = ""
+        print(self.diff[0][0])
+        for e in self.diff:
+            dif = dif + f"Ваш ответ: {e[0]}, Верный ответ: {e[1]}\n"
+        self.differense.setText(dif)
+        cur = self.con.cursor()
+        result = cur.execute("SELECT * FROM results").fetchall()
+        self.tableWidget.setRowCount(len(result))
+        if not result:
+            return
+        self.tableWidget.setColumnCount(len(result[0]))
+        titles = [i[0] for i in cur.description]
+        self.tableWidget.setHorizontalHeaderLabels(titles)
+        for i, elem in enumerate(result):
+            for j, val in enumerate(elem):
+                self.tableWidget.setItem(i, j, QTableWidgetItem(str(val)))
 
 
 if __name__ == '__main__':

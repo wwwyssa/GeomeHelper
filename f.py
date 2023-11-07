@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(802, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
@@ -43,7 +43,7 @@ class Ui_MainWindow(object):
         self.Learning_meet = QtWidgets.QWidget()
         self.Learning_meet.setObjectName("Learning_meet")
         self.textBrowser_learn = QtWidgets.QTextBrowser(self.Learning_meet)
-        self.textBrowser_learn.setGeometry(QtCore.QRect(10, 40, 751, 201))
+        self.textBrowser_learn.setGeometry(QtCore.QRect(10, 30, 751, 201))
         self.textBrowser_learn.setObjectName("textBrowser_learn")
         self.learning_back_btn = QtWidgets.QPushButton(self.Learning_meet)
         self.learning_back_btn.setGeometry(QtCore.QRect(590, 500, 181, 31))
@@ -148,7 +148,7 @@ class Ui_MainWindow(object):
         self.textBrowser_result.setGeometry(QtCore.QRect(90, 140, 256, 31))
         self.textBrowser_result.setObjectName("textBrowser_result")
         self.tableWidget = QtWidgets.QTableWidget(self.page)
-        self.tableWidget.setGeometry(QtCore.QRect(30, 230, 321, 301))
+        self.tableWidget.setGeometry(QtCore.QRect(30, 230, 481, 301))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
@@ -158,10 +158,16 @@ class Ui_MainWindow(object):
         self.result_back_btn = QtWidgets.QPushButton(self.page)
         self.result_back_btn.setGeometry(QtCore.QRect(620, 510, 141, 28))
         self.result_back_btn.setObjectName("result_back_btn")
+        self.differense = QtWidgets.QTextBrowser(self.page)
+        self.differense.setGeometry(QtCore.QRect(370, 60, 421, 151))
+        self.differense.setObjectName("differense")
+        self.label_10 = QtWidgets.QLabel(self.page)
+        self.label_10.setGeometry(QtCore.QRect(440, 30, 281, 16))
+        self.label_10.setObjectName("label_10")
         self.stackedWidget.addWidget(self.page)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -203,7 +209,7 @@ class Ui_MainWindow(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:36pt; font-weight:600;\">Приветсвую Вас в Тестировании</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:36pt; font-weight:600;\">Приветствую Вас в Тестировании</span></p></body></html>"))
         self.testing_back_btn.setText(_translate("MainWindow", "НАЗАД НА ГЛАВНУЮ"))
         self.testing_start_btn.setText(_translate("MainWindow", "НАЧАТЬ ТЕСТИРОВАНИЕ"))
         self.label_5.setText(_translate("MainWindow", "Ведиьте Ваше Имя и Фамилию"))
@@ -236,3 +242,4 @@ class Ui_MainWindow(object):
         self.label_8.setText(_translate("MainWindow", "Результат"))
         self.label_9.setText(_translate("MainWindow", "Таблица результатов"))
         self.result_back_btn.setText(_translate("MainWindow", "НАЗАД НА ГЛАВНУЮ"))
+        self.label_10.setText(_translate("MainWindow", "Ошибки. Ваш ответ и веный ответ"))

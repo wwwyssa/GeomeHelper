@@ -55,23 +55,30 @@ def check_results(user_answer, questions):
             kol += 1
         else:
             diff.append((user_answer[i], questions[i][2]))
-    return (kol, diff)
+    return kol, diff
 
 
 def update_db(theme, name, result):
     name_db = 'geoma_db'
     con = sqlite3.connect(name_db)
     cur = con.cursor()
+    f = True
     tmp = con.execute(f"""SELECT name FROM results WHERE name = '{name}'""").fetchall()
     if len(tmp) == 0 or name not in tmp[0]:
         query = f"""INSERT INTO results(theme, name, result) VALUES ('{theme}', '{name}', {result})"""
         res = cur.execute(query)
+        f = False
     else:
-        tmp = con.execute(f"""SELECT result FROM results WHERE name = '{name}'""").fetchall()
-        if tmp[0][0] < result:
-            print(1)
-            query = f"""UPDATE results
-            SET result = {result}
-            WHERE name = '{name}'"""
-            res = cur.execute(query)
+        tmp = con.execute(f"""SELECT result, theme FROM results WHERE name = {name}""").fetchall()
+        for e in tmp:
+            if theme in e:
+                f = False
+                if e[0] < result:
+                    query = f"""UPDATE results SET result = {result} WHERE name = '{name}' AND theme = '{theme}'"""
+                    res = cur.execute(query)
+                break
+    if f:
+        query = f"""INSERT INTO results(theme, name, result) VALUES ('{theme}', '{name}', {result})"""
+        res = cur.execute(query)
     con.commit()
+
