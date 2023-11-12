@@ -1,11 +1,8 @@
 import sqlite3
 import sys
-import io
-from PyQt5 import uic
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QInputDialog, QTableWidgetItem
 
-import testing
 from testing import generate_questions, check_results, update_db
 from f import Ui_MainWindow
 
@@ -90,7 +87,6 @@ class MyGeomHelper(QMainWindow, Ui_MainWindow):
 
         self.label_testing.setText(f"Тема теста: {self.test_theme}")
         self.questions = generate_questions(self.test_theme)
-        print(self.test_theme)
         self.textBrowser_task.setText(self.questions[self.question_idx][1])
         self.question_idx += 1
 
@@ -164,6 +160,7 @@ class MyGeomHelper(QMainWindow, Ui_MainWindow):
             return
         self.tableWidget.setColumnCount(len(result[0]))
         titles = [i[0] for i in cur.description]
+        result.sort(key=lambda x: (x[0], -x[2]))
         self.tableWidget.setHorizontalHeaderLabels(titles)
         for i, elem in enumerate(result):
             for j, val in enumerate(elem):
