@@ -44,6 +44,7 @@ class MyGeomHelper(QMainWindow, Ui_MainWindow):
         self.patimg = QImage(name)
         self.pixmap = QPixmap(f'{name}')
         self.label.setPixmap(self.pixmap)
+        self.label_13.setPixmap(self.pixmap)
 
     def move_to_another(self):
         if self.sender().text() == "Учить!":

@@ -157,6 +157,25 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
      </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>791</width>
+        <height>571</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <zorder>label_11</zorder>
+     <zorder>textBrowser_learn</zorder>
+     <zorder>learning_back_btn</zorder>
+     <zorder>learning_start_btn</zorder>
+     <zorder>label_3</zorder>
+     <zorder>comboBox</zorder>
     </widget>
     <widget class="QWidget" name="Learning">
      <widget class="QPushButton" name="l_back_btn">
@@ -225,6 +244,25 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:6.6pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>791</width>
+        <height>571</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <zorder>label_12</zorder>
+     <zorder>l_back_btn</zorder>
+     <zorder>lable_learn</zorder>
+     <zorder>comboBox_learn</zorder>
+     <zorder>pushButton_learn</zorder>
+     <zorder>info_learn</zorder>
     </widget>
     <widget class="QWidget" name="Testing_meet">
      <widget class="QTextBrowser" name="textBrowser_3">
@@ -559,6 +597,21 @@ p, li { white-space: pre-wrap; }
      </widget>
     </widget>
    </widget>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>791</width>
+      <height>571</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <zorder>label_13</zorder>
+   <zorder>stackedWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
