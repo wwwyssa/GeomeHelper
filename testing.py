@@ -69,7 +69,7 @@ def update_db(theme, name, result):
         res = cur.execute(query)
         f = False
     else:
-        tmp = con.execute(f"""SELECT result, theme FROM results WHERE name = {name}""").fetchall()
+        tmp = con.execute(f"""SELECT result, theme FROM results WHERE name = '{name}'""").fetchall()
         for e in tmp:
             if theme in e:
                 f = False
